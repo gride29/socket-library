@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UpdateBook</title>
+</head>
+<body style="font-family: 'JetBrains Mono'; font-size: 16px">
+    <form action="/updateBookAction" method="post">
+        <label style="max-width: 10px; word-wrap: break-word">ID książki:</label>
+        <input type="text" name="id" id="id"/>
+        <p></p>
+        <label>Nowy tytuł:</label>
+        <input type="text" name="title" id="title"/>
+        <p></p>
+        <label>Nowy autor:</label>
+        <input type="text" name="author" id="author"/>
+        <p></p>
+        <input type="submit" value="Zaktualizuj" />
+    </form>
+</body>
+</html>
