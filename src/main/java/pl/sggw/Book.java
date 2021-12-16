@@ -4,12 +4,14 @@ public class Book {
 
     private int id;
     private String title;
-    private String author;
+    private String authorName;
+    private String authorSurname;
 
-    public Book(int id, String title, String author) {
+    public Book(int id, String title, String authorName, String authorSurname) {
         this.id = id;
-        this.author = author;
         this.title = title;
+        this.authorName = authorName;
+        this.authorSurname = authorSurname;
     }
 
     public int getId() {
@@ -28,20 +30,29 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorSurname() {
+        return authorSurname;
+    }
+
+    public void setAuthorSurname(String authorSurname) {
+        this.authorSurname = authorSurname;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "Book { " +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                "}";
+                ", authorName='" + authorName + '\'' +
+                ", authorSurname='" + authorSurname + '\'' +
+                " }";
     }
 }

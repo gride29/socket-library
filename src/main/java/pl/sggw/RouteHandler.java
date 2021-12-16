@@ -29,7 +29,11 @@ public class RouteHandler {
         if (route.equals("favicon.ico") || route.equals("post.asp") || route.isEmpty()) {
             return view;
         } else {
-            route = "src/main/resources/" + route + ".html";
+            if (route.equals("addBookAction") || route.equals("updateBookAction") || route.equals("clearBooksAction")) {
+                route = "src/main/resources/" + route + ".html";
+            } else {
+                route = "src/main/resources/" + route;
+            }
             try {
                 view = readHTMLFile(route);
             } catch (Exception e) {
@@ -45,11 +49,11 @@ public class RouteHandler {
             }
             if (route.equals("src/main/resources/addBookAction.html")) {
                 if (books.isEmpty()) {
-                    Book book = new Book(0, requestBody.get("title"), requestBody.get("author"));
+                    Book book = new Book(0, requestBody.get("title"), requestBody.get("authorName"), requestBody.get("authorSurname"));
                     books.put(0, book);
                 } else {
                     int lastId = Collections.max(books.keySet());
-                    Book book = new Book(lastId + 1, requestBody.get("title"), requestBody.get("author"));
+                    Book book = new Book(lastId + 1, requestBody.get("title"), requestBody.get("authorName"), requestBody.get("authorSurname"));
                     books.put(lastId + 1, book);
                 }
             }
@@ -57,7 +61,8 @@ public class RouteHandler {
                 books.put(Integer.parseInt(requestBody.get("id")), new Book(
                         Integer.parseInt(requestBody.get("id")),
                         requestBody.get("title"),
-                        requestBody.get("author")));
+                        requestBody.get("authorName"),
+                        requestBody.get("authorSurname")));
             }
         }
         return view;

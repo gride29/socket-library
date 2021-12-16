@@ -7,11 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DatabaseHandler {
 
     public static String printSingleBook(Book book) {
-        return "<p>" + "[" + book.getId() + "] [" + book.getTitle() + "] [" + book.getAuthor() + "]" + "</p>";
+        return "<p>" + "[" + book.getId() + "] [" + book.getTitle() + "] [" + book.getAuthorName() + "] [" + book.getAuthorSurname() + "]" + "</p>";
     }
 
     public static String dictToHTML(ConcurrentHashMap<Integer, Book> books) {
-        String initialOutput = "[id]" + " [tytuł] " + " [autor] ";
+        String initialOutput = "[id]" + " [tytuł] " + " [imię autora] " + " [nazwisko autora] ";
         StringBuilder output = new StringBuilder(initialOutput);
         for (Book book : books.values()) {
             output.append(printSingleBook(book));
@@ -46,13 +46,14 @@ public class DatabaseHandler {
         }
         int id;
         String[] keyValuePair;
-        String bookTitle, bookAuthor;
+        String bookTitle, bookAuthorName, bookAuthorSurname;
         for (String entry : entries) {
-            keyValuePair = entry.trim().split(",", 3);
+            keyValuePair = entry.trim().split(",", 4);
             id = Integer.parseInt(keyValuePair[0].substring(7));
             bookTitle = keyValuePair[1].trim().substring(10, keyValuePair[1].length() - 2);
-            bookAuthor = keyValuePair[2].trim().substring(11, keyValuePair[2].length() - 3);
-            booksDictionary.put(id, new Book(id, bookTitle, bookAuthor));
+            bookAuthorName = keyValuePair[2].trim().substring(15, keyValuePair[2].length() - 2);
+            bookAuthorSurname = keyValuePair[3].trim().substring(18, keyValuePair[3].length() - 3);
+            booksDictionary.put(id, new Book(id, bookTitle, bookAuthorName, bookAuthorSurname));
         }
         return booksDictionary;
     }
