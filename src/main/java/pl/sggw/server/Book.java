@@ -1,4 +1,4 @@
-package pl.sggw;
+package pl.sggw.server;
 
 public class Book {
 

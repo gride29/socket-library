@@ -1,29 +1,38 @@
-package pl.sggw;
+package pl.sggw.restserver;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DatabaseHandler {
 
-    public static String printSingleBook(Book book) {
-        return "<p>" + "[" + book.getId() + "] [" + book.getTitle() + "] [" + book.getAuthorName() + "] [" + book.getAuthorSurname() + "]" + "</p>";
+    public static String printSingleBookInJSON(Book book) {
+        return "\r\n{\"id\": \"" + book.getId() + "\", \"title\": \"" + book.getTitle() + "\", \"authorName\": \"" + book.getAuthorName() + "\", \"authorSurname\": \"" + book.getAuthorSurname() + "\"}";
     }
 
-    public static String dictToHTML(ConcurrentHashMap<Integer, Book> books) {
-        String initialOutput = "[id]" + " [tytuł] " + " [imię autora] " + " [nazwisko autora] ";
+    public static String dictToJSON(ConcurrentHashMap<Integer, Book> books) {
+        String initialOutput = "[";
         StringBuilder output = new StringBuilder(initialOutput);
+        int i = 0;
         for (Book book : books.values()) {
-            output.append(printSingleBook(book));
+            if (i++ == books.size() - 1) {
+                output.append(printSingleBookInJSON(book));
+            } else {
+                output.append(printSingleBookInJSON(book));
+                output.append(", ");
+            }
         }
         if (output.toString().equals(initialOutput)) {
             return "Brak książek";
         } else {
-            return output.toString();
+            String finalOutput = "\r\n]";
+            finalOutput = output + finalOutput;
+            return finalOutput;
         }
     }
 
-    public static ConcurrentHashMap<Integer, Book> readJsonFile() throws FileNotFoundException {
+    public static ConcurrentHashMap<Integer, Book> readJsonFileAndParse() throws FileNotFoundException {
         File file = new File("src/main/resources/database.json");
         Scanner scan = new Scanner(file);
         StringBuilder json = new StringBuilder();
